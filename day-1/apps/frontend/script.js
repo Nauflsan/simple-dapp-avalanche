@@ -1,21 +1,19 @@
-// --- ELEMENTS ---
+
 const connectBtn = document.getElementById("connectBtn");
 const disconnectBtn = document.getElementById("disconnectBtn");
 const statusEl = document.getElementById("status");
 const addressEl = document.getElementById("address");
 const networkEl = document.getElementById("network");
 const balanceEl = document.getElementById("balance");
+const AVALANCHE_FUJI_CHAIN_ID = "0xa869"; 
 
-// --- CONSTANTS ---
-const AVALANCHE_FUJI_CHAIN_ID = "0xa869"; // Avalanche Fuji Testnet chainId (hex)
 
-// --- WALLET STATE ---
 const walletState = {
   address: null,
   chainId: null,
 };
 
-// --- UTILITY FUNCTIONS ---
+// Function
 function formatAvaxBalance(balanceWei) {
   const balance = parseInt(balanceWei, 16);
   return (balance / 1e18).toFixed(4);
