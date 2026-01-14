@@ -81,6 +81,21 @@ export default function Page() {
   // ==============================
   const TARGET_CHAIN_ID = 43113; // Avalanche Fuji
   const isWrongNetwork = isConnected && chainId !== TARGET_CHAIN_ID;
+  const getNetworkName = (chainId?: number) => {
+  switch (chainId) {
+    case 43113:
+      return "Avalanche Fuji";
+    case 43114:
+      return "Avalanche C-Chain";
+    case 1:
+      return "Ethereum Mainnet";
+    case 5:
+      return "Goerli";
+    default:
+      return "Unknown Network";
+  }
+};
+
 
 
   // ==============================
@@ -287,41 +302,59 @@ if (isWrongNetwork) {
 
           {/* Wallet */}
           {!isConnected ? (
-            <button
-              onClick={() => connect({ connector: injected() })}
-              disabled={isConnecting}
-              className="w-full py-2 rounded-lg
-              bg-gradient-to-r from-indigo-500 to-cyan-500
-              hover:opacity-90 transition"
-            >
-              {isConnecting ? "Connecting..." : "Connect Wallet"}
-            </button>
-          ) : (
-            <div className="space-y-3">
-              <p className="text-sm text-gray-300">Connected</p>
+  <button
+    onClick={() => connect({ connector: injected() })}
+    disabled={isConnecting}
+    className="w-full py-2 rounded-lg
+      bg-gradient-to-r from-indigo-500 to-cyan-500
+      hover:opacity-90 transition"
+  >
+    {isConnecting ? "Connecting..." : "Connect Wallet"}
+  </button>
+) : (
+  <div className="space-y-3">
+    <p className="text-sm text-gray-300">Connected</p>
 
-              <div
-                className="flex items-center justify-between px-4 py-2 rounded-lg bg-black/40 border border-white/20 backdrop-blur-md"
-              >
-                <div className="flex items-center gap-2">
-                  {/* Status dot */}
-                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+    <div
+      className="flex flex-col items-start px-4 py-3 rounded-lg
+      bg-black/40 border border-white/20
+      backdrop-blur-md"
+    >
+      {/* Top row: status dot + address */}
+      <div className="flex items-center gap-2 w-full justify-between">
+        <div className="flex items-center gap-2">
+          {/* Status dot */}
+          <span
+            className={`w-2 h-2 rounded-full ${
+              isWrongNetwork ? "bg-red-400" : "bg-green-400 animate-pulse"
+            }`}
+          />
 
-                  {/* Short Address */}
-                  <span className="font-mono text-sm">
-                    {shortenAddress(address)}
-                  </span>
-                </div>
+          {/* Short address */}
+          <span className="font-mono text-sm">{shortenAddress(address)}</span>
+        </div>
 
-                <button
-                  onClick={() => disconnect()}
-                  className="text-red-400 text-xs hover:underline"
-                >
-                  Disconnect
-                </button>
-              </div>
-            </div>
-          )}
+        {/* Disconnect button */}
+        <button
+          onClick={() => disconnect()}
+          className="text-red-400 text-xs hover:underline"
+        >
+          Disconnect
+        </button>
+      </div>
+
+      {/* Network name */}
+      <span
+        className={`text-xs ${
+          isWrongNetwork ? "text-red-400" : "text-gray-400"
+        } mt-1`}
+      >
+        {getNetworkName(chainId)}
+      </span>
+    </div>
+  </div>
+)}
+
 
           {/* Read Value */}
           <div className="pt-4 border-t border-white/20 space-y-3">
