@@ -19,7 +19,7 @@ async function bootstrap() {
     .setTitle('Event Simple Storage DApp API')
     .setDescription('The Simple Storage dApp')
     .setVersion('1.0')
-    .addTag('simple-storage')
+    .addTag(' Author : Naufal Sausan S. 241011403033')
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
